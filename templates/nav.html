@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    
+    <!-- Google Font for Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+
+        /* Video Background */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7; /* Set opacity to 0.7 */
+        }
+
+        /* Header */
+        h2 {
+            background-color: #2E8B57;
+            text-align: center;
+            padding: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Navigation Grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px; /* Adds space between rows and columns */
+            padding: 30px;
+            max-width: 900px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .grid-item {
+            background-color: #006400; /* Dark Green */
+            color: white;
+            padding: 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+            border: 2px solid white; /* White Border */
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .grid-item:hover {
+            background-color: #45a049;
+            transform: scale(1.05); /* Slight zoom effect */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Video Background -->
+    <div class="video-container">
+        <video autoplay loop muted>
+            <source src="https://cdn.pixabay.com/video/2017/09/13/11973-233836087_large.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <h2>SELECT THE FEATURES BELOW<br>BASED ON YOUR REQUIREMENTS</h2>
+
+    <div class="grid-container">
+        {% for item in nav_items %}
+            <a href="{{ item.url }}" class="grid-item">{{ item.name }}</a>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

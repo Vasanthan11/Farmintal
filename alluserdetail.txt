@@ -1,0 +1,628 @@
+CREATE DATABASE crop_yield_db;
+USE crop_yield_db;
+
+
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+
+
+CREATE TABLE soil_data (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    crop_name VARCHAR(100) NOT NULL,
+    nitrogen FLOAT NOT NULL,
+    phosphorus FLOAT NOT NULL,
+    potassium FLOAT NOT NULL,
+    pH FLOAT NOT NULL,
+    organic_matter FLOAT NOT NULL
+);
+
+
+INSERT INTO soil_data (crop_name, nitrogen, phosphorus, potassium, pH, organic_matter)
+VALUES 
+('Wheat', 50, 30, 40, 6.5, 2.0),
+('Rice', 80, 40, 50, 5.5, 3.0),
+('Maize', 60, 35, 45, 6.0, 2.5),
+('Barley', 55, 25, 35, 6.8, 1.8),
+('Oats', 45, 28, 38, 6.2, 2.1),
+('Soybean', 70, 45, 50, 6.0, 3.2),
+('Peanut', 65, 40, 55, 5.8, 2.8),
+('Sunflower', 55, 30, 45, 6.5, 2.3),
+('Sorghum', 60, 32, 48, 6.4, 2.6),
+('Millet', 50, 25, 40, 6.3, 1.9),
+('Chickpea', 55, 35, 42, 6.6, 2.5),
+('Lentil', 52, 30, 38, 6.5, 2.4),
+('Green Gram', 48, 28, 36, 6.2, 2.0),
+('Black Gram', 50, 30, 37, 6.3, 2.1),
+('Pigeon Pea', 53, 32, 40, 6.4, 2.2),
+('Mustard', 70, 50, 60, 5.7, 3.0),
+('Sesame', 60, 40, 50, 5.9, 2.7),
+('Cotton', 80, 45, 55, 6.1, 3.1),
+('Sugarcane', 85, 50, 65, 5.6, 3.5),
+('Tobacco', 75, 55, 60, 5.4, 3.2),
+('Tomato', 60, 35, 45, 6.2, 2.6),
+('Potato', 70, 40, 50, 5.8, 3.0),
+('Carrot', 50, 30, 40, 6.3, 2.1),
+('Onion', 55, 35, 42, 6.2, 2.4),
+('Garlic', 52, 32, 40, 6.1, 2.3),
+('Cabbage', 60, 38, 48, 6.5, 2.7),
+('Cauliflower', 58, 36, 46, 6.4, 2.6),
+('Spinach', 50, 28, 38, 6.3, 2.0),
+('Okra', 55, 30, 42, 6.2, 2.3),
+('Brinjal', 62, 40, 50, 6.0, 2.8);
+
+
+
+
+CREATE TABLE weather_data (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    date DATE NOT NULL,
+    temperature FLOAT NOT NULL,
+    humidity FLOAT NOT NULL,
+    rainfall FLOAT NOT NULL
+);
+
+
+INSERT INTO weather_data (date, temperature, humidity, rainfall)
+VALUES 
+-- March 2025
+('2025-03-01', 25.5, 60, 120),
+('2025-03-02', 27.0, 55, 90),
+('2025-03-03', 30.0, 50, 70),
+('2025-03-04', 28.5, 52, 85),
+('2025-03-05', 26.0, 58, 100),
+('2025-03-06', 24.5, 62, 110),
+('2025-03-07', 29.0, 54, 75),
+('2025-03-08', 31.0, 48, 60),
+('2025-03-09', 32.5, 45, 50),
+('2025-03-10', 28.0, 53, 80),
+('2025-03-11', 27.5, 55, 90),
+('2025-03-12', 26.5, 57, 95),
+('2025-03-13', 25.0, 60, 110),
+('2025-03-14', 24.0, 65, 130),
+('2025-03-15', 29.5, 50, 70),
+('2025-03-16', 30.0, 48, 65),
+('2025-03-17', 31.5, 46, 55),
+('2025-03-18', 27.0, 52, 85),
+('2025-03-19', 28.0, 50, 75),
+('2025-03-20', 26.0, 58, 105),
+('2025-03-21', 25.5, 63, 125),
+('2025-03-22', 29.0, 55, 80),
+('2025-03-23', 30.5, 50, 65),
+('2025-03-24', 31.0, 48, 60),
+('2025-03-25', 28.5, 53, 85),
+('2025-03-26', 27.5, 56, 95),
+('2025-03-27', 26.5, 59, 105),
+('2025-03-28', 25.0, 61, 115),
+('2025-03-29', 24.5, 64, 125),
+('2025-03-30', 29.0, 52, 75),
+('2025-03-31', 28.0, 50, 70),
+
+-- April 2025
+('2025-04-01', 26.5, 58, 100),
+('2025-04-02', 27.0, 55, 90),
+('2025-04-03', 30.0, 50, 70),
+('2025-04-04', 29.5, 52, 85),
+('2025-04-05', 28.0, 57, 105),
+('2025-04-06', 25.5, 60, 120),
+('2025-04-07', 29.0, 54, 75),
+('2025-04-08', 31.0, 48, 60),
+('2025-04-09', 32.5, 45, 50),
+('2025-04-10', 30.0, 50, 80),
+('2025-04-11', 27.5, 55, 90),
+('2025-04-12', 26.0, 58, 110),
+('2025-04-13', 24.5, 62, 125),
+('2025-04-14', 25.0, 64, 130),
+('2025-04-15', 29.5, 50, 70),
+('2025-04-16', 30.0, 48, 65),
+('2025-04-17', 31.5, 46, 55),
+('2025-04-18', 28.0, 53, 85),
+('2025-04-19', 27.0, 50, 75),
+('2025-04-20', 26.5, 58, 105),
+('2025-04-21', 25.5, 63, 125),
+('2025-04-22', 29.0, 55, 80),
+('2025-04-23', 30.5, 50, 65),
+('2025-04-24', 31.0, 48, 60),
+('2025-04-25', 28.5, 53, 85),
+('2025-04-26', 27.5, 56, 95),
+('2025-04-27', 26.5, 59, 105),
+('2025-04-28', 25.0, 61, 115),
+('2025-04-29', 24.5, 64, 125),
+('2025-04-30', 28.5, 52, 75),
+
+-- May 2025
+('2025-05-01', 29.0, 55, 90),
+('2025-05-02', 30.5, 50, 70),
+('2025-05-03', 31.5, 48, 60),
+('2025-05-04', 32.0, 46, 55),
+('2025-05-05', 28.5, 50, 80),
+('2025-05-06', 27.0, 55, 95),
+('2025-05-07', 26.5, 57, 100),
+('2025-05-08', 25.0, 60, 110),
+('2025-05-09', 24.5, 62, 120),
+('2025-05-10', 30.0, 50, 75),
+('2025-05-11', 28.5, 53, 85),
+('2025-05-12', 27.5, 56, 95),
+('2025-05-13', 26.5, 59, 105),
+('2025-05-14', 25.0, 61, 115),
+('2025-05-15', 24.5, 64, 125),
+('2025-05-16', 30.0, 50, 70),
+('2025-05-17', 31.5, 48, 65),
+('2025-05-18', 32.0, 46, 55),
+('2025-05-19', 28.5, 50, 80),
+('2025-05-20', 27.0, 55, 90),
+('2025-05-21', 26.5, 57, 100),
+('2025-05-22', 25.0, 60, 110),
+('2025-05-23', 24.5, 62, 120),
+('2025-05-24', 30.0, 50, 75),
+('2025-05-25', 28.5, 53, 85),
+('2025-05-26', 27.5, 56, 95),
+('2025-05-27', 26.5, 59, 105),
+('2025-05-28', 25.0, 61, 115),
+('2025-05-29', 24.5, 64, 125),
+('2025-05-30', 30.0, 52, 70),
+('2025-05-31', 28.5, 50, 75);
+
+
+
+
+
+CREATE TABLE IF NOT EXISTS pest_diseases (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    disease_name VARCHAR(255) NOT NULL,
+    cause TEXT NOT NULL,
+    effects TEXT NOT NULL,
+    solution TEXT NOT NULL,
+    image_name VARCHAR(255) UNIQUE NOT NULL
+);
+
+
+INSERT INTO pest_diseases (disease_name, cause, effects, solution, image_name) 
+VALUES 
+('Leaf Blight', 'Fungal infection caused by Alternaria', 
+ 'Leaf wilting, yellow and brown spots, and premature leaf drop. The disease spreads rapidly in warm and humid conditions, affecting plant growth and reducing yield.', 
+ 'Apply fungicides like chlorothalonil or mancozeb. Remove infected leaves and avoid overhead watering to reduce moisture levels.', 
+ 'leaf_blight.jpg'),
+
+('Powdery Mildew', 'Fungal spores spread through air in dry conditions', 
+ 'White, powdery fungal growth on leaves, buds, and stems. Reduces photosynthesis, leading to stunted growth and poor fruit development.', 
+ 'Use sulfur or neem oil sprays. Prune infected areas and improve air circulation around plants.', 
+ 'powdery_mildew.jpg'),
+
+('Rust Disease', 'Fungal spores that thrive in moist environments', 
+ 'Orange-brown pustules appear on the underside of leaves, leading to defoliation and weakened plants. Common in wheat, corn, and beans.', 
+ 'Apply copper-based fungicides. Rotate crops and remove infected plant debris.', 
+ 'rust_disease.jpg'),
+
+('Bacterial Wilt', 'Caused by Ralstonia solanacearum bacteria', 
+ 'Wilting and yellowing of leaves, often followed by plant collapse. The bacteria block water uptake, leading to plant death.', 
+ 'Use resistant plant varieties. Practice crop rotation and avoid soil contamination.', 
+ 'bacterial_wilt.jpg'),
+
+('Citrus Canker', 'Bacterial infection caused by Xanthomonas', 
+ 'Raised brown lesions with yellow halos on citrus leaves and fruits, causing premature fruit drop and reduced quality.', 
+ 'Apply copper-based sprays. Remove infected plant parts and disinfect tools.', 
+ 'citrus_canker.jpg'),
+
+('Black Sigatoka', 'Fungal disease affecting banana plants', 
+ 'Dark streaks appear on banana leaves, which gradually turn black and dry out, reducing photosynthesis and yield.', 
+ 'Use systemic fungicides and plant resistant banana varieties. Maintain proper plant spacing.', 
+ 'black_sigatoka.jpg'),
+
+('Anthracnose', 'Fungal spores spread via rain splash', 
+ 'Dark, sunken lesions on fruits, leaves, and stems, causing premature fruit rot and poor harvest.', 
+ 'Apply fungicides like azoxystrobin. Ensure proper drainage and avoid excessive moisture.', 
+ 'anthracnose.jpg'),
+
+('Early Blight', 'Caused by Alternaria solani fungus', 
+ 'Dark concentric rings on tomato and potato leaves, leading to leaf death and reduced fruit yield.', 
+ 'Use copper-based fungicides and practice crop rotation.', 
+ 'early_blight.jpg'),
+
+('Downy Mildew', 'Oomycete infection affecting grapevines', 
+ 'Yellow patches on leaves with a grayish mold underneath, leading to defoliation and poor fruit quality.', 
+ 'Apply systemic fungicides and improve vineyard ventilation.', 
+ 'downy_mildew.jpg'),
+
+('Clubroot', 'Soil-borne disease caused by Plasmodiophora brassicae', 
+ 'Swollen, deformed roots in cabbage and broccoli, leading to stunted growth and wilting.', 
+ 'Increase soil pH with lime, practice long-term crop rotation, and use disease-resistant cultivars.', 
+ 'clubroot.jpg'),
+
+('Damping Off', 'Fungal infection in seedlings due to excessive moisture', 
+ 'Seedlings fail to emerge or collapse at the base due to root rot.', 
+ 'Ensure proper drainage, avoid overwatering, and use sterilized soil.', 
+ 'damping_off.jpg'),
+
+('Fusarium Wilt', 'Fungal disease affecting vascular system', 
+ 'Yellowing and wilting of leaves, often leading to plant death.', 
+ 'Use disease-resistant seeds, practice crop rotation, and apply biofungicides.', 
+ 'fusarium_wilt.jpg'),
+
+('Fire Blight', 'Bacterial disease affecting fruit trees', 
+ 'Blackened, withered flowers and shoots, resembling fire damage.', 
+ 'Prune affected branches, apply copper sprays, and avoid excessive nitrogen fertilizer.', 
+ 'fire_blight.jpg'),
+
+('Verticillium Wilt', 'Soil-borne fungus blocking water flow in plants', 
+ 'Yellowing, wilting, and stunted growth in vegetables, trees, and shrubs.', 
+ 'Use resistant varieties, remove infected plants, and solarize soil.', 
+ 'verticillium_wilt.jpg'),
+
+('White Mold', 'Fungal spores thriving in cool, moist conditions', 
+ 'Cottony white growth on stems and leaves, causing plant decay.', 
+ 'Improve air circulation, apply fungicides, and remove infected plants.', 
+ 'white_mold.jpg'),
+
+('Leaf Curl Virus', 'Virus transmitted by aphids and whiteflies', 
+ 'Leaves become thick, curled, and distorted, reducing photosynthesis.', 
+ 'Control insect vectors, use virus-resistant varieties, and remove infected plants.', 
+ 'leaf_curl_virus.jpg'),
+
+('Sooty Mold', 'Fungus growing on honeydew secreted by pests', 
+ 'Black, sticky mold covering leaves, reducing photosynthesis.', 
+ 'Control aphids and scale insects, wash leaves, and improve plant health.', 
+ 'sooty_mold.jpg'),
+
+('Tomato Mosaic Virus', 'Virus spread through contaminated tools and hands', 
+ 'Mosaic-like light and dark green patches on leaves, stunted growth, and reduced fruit yield.', 
+ 'Use virus-free seeds, disinfect tools, and avoid handling infected plants.', 
+ 'tomato_mosaic_virus.jpg'),
+
+('Corn Smut', 'Fungal infection affecting corn kernels', 
+ 'Grayish-white, swollen galls on corn ears, reducing yield.', 
+ 'Remove infected plants, rotate crops, and use resistant corn varieties.', 
+ 'corn_smut.jpg'),
+
+('Peach Leaf Curl', 'Fungal infection affecting peach trees', 
+ 'Leaves become thick, curled, and reddish, leading to defoliation and reduced fruit yield.', 
+ 'Apply fungicides in late fall or early spring and use resistant varieties.', 
+ 'peach_leaf_curl.jpg');
+
+
+
+
+
+CREATE TABLE greenhouse_data (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    temperature FLOAT NOT NULL,
+    humidity FLOAT NOT NULL,
+    soil_moisture FLOAT NOT NULL,
+    co2_level FLOAT,
+    light_intensity FLOAT,
+    ph_level FLOAT
+);
+
+
+INSERT INTO greenhouse_data (temperature, humidity, soil_moisture, co2_level, light_intensity, ph_level, timestamp)
+VALUES 
+(30.5, 60.2, 45.1, 800, 5000, 6.5, NOW()),
+(32.0, 55.0, 40.3, 900, 6000, 7.0, NOW() - INTERVAL 1 DAY),
+(28.5, 65.3, 50.2, 750, 4500, 6.8, NOW() - INTERVAL 2 DAY),
+(31.2, 58.6, 42.5, 850, 5200, 6.7, NOW() - INTERVAL 3 DAY),
+(29.8, 62.1, 48.3, 780, 4800, 6.6, NOW() - INTERVAL 4 DAY),
+(27.9, 67.5, 52.7, 730, 4300, 6.4, NOW() - INTERVAL 5 DAY),
+(33.4, 53.2, 39.8, 920, 6100, 7.2, NOW() - INTERVAL 6 DAY),
+(30.9, 59.8, 44.0, 810, 4950, 6.5, NOW() - INTERVAL 7 DAY),
+(28.2, 64.7, 51.0, 740, 4600, 6.7, NOW() - INTERVAL 8 DAY),
+(31.7, 57.3, 43.1, 860, 5300, 6.8, NOW() - INTERVAL 9 DAY),
+(29.4, 61.9, 47.5, 770, 4700, 6.6, NOW() - INTERVAL 10 DAY),
+(26.8, 69.2, 54.3, 710, 4200, 6.3, NOW() - INTERVAL 11 DAY),
+(34.0, 51.8, 38.2, 950, 6300, 7.3, NOW() - INTERVAL 12 DAY),
+(31.0, 60.5, 45.0, 820, 5100, 6.7, NOW() - INTERVAL 13 DAY),
+(27.5, 66.1, 50.9, 720, 4400, 6.5, NOW() - INTERVAL 14 DAY),
+(32.5, 54.7, 40.5, 880, 5900, 7.1, NOW() - INTERVAL 15 DAY),
+(30.3, 58.2, 42.9, 830, 5150, 6.6, NOW() - INTERVAL 16 DAY),
+(28.9, 63.8, 49.1, 760, 4550, 6.7, NOW() - INTERVAL 17 DAY),
+(31.9, 56.4, 41.7, 870, 5750, 6.9, NOW() - INTERVAL 18 DAY),
+(29.6, 60.1, 46.8, 790, 4850, 6.5, NOW() - INTERVAL 19 DAY),
+(27.2, 68.0, 53.5, 700, 4100, 6.2, NOW() - INTERVAL 20 DAY),
+(33.7, 52.9, 39.2, 930, 6200, 7.2, NOW() - INTERVAL 21 DAY),
+(30.7, 59.0, 44.3, 810, 5000, 6.6, NOW() - INTERVAL 22 DAY),
+(28.4, 65.0, 50.4, 750, 4600, 6.7, NOW() - INTERVAL 23 DAY),
+(31.5, 57.8, 42.2, 860, 5250, 6.8, NOW() - INTERVAL 24 DAY),
+(29.1, 62.5, 48.0, 780, 4700, 6.6, NOW() - INTERVAL 25 DAY),
+(26.5, 70.3, 55.0, 690, 4050, 6.1, NOW() - INTERVAL 26 DAY),
+(34.3, 50.5, 37.6, 960, 6400, 7.4, NOW() - INTERVAL 27 DAY),
+(31.2, 60.8, 45.5, 825, 5150, 6.7, NOW() - INTERVAL 28 DAY),
+(27.8, 66.7, 51.3, 715, 4350, 6.4, NOW() - INTERVAL 29 DAY);
+
+
+
+
+
+CREATE TABLE crop_diseases (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    crop_name VARCHAR(100) NOT NULL,
+    disease_name VARCHAR(255) NOT NULL,
+    prevention_measures TEXT NOT NULL,
+    expected_yield VARCHAR(100) NOT NULL
+);
+
+
+
+INSERT INTO market_prices (product_name, city, state, yesterday_price, today_price, image_url) VALUES
+-- Wheat Prices
+('Wheat', 'Los Angeles', 'California', 250.50, 260.75, 'https://media.istockphoto.com/id/622925154/photo/ripe-rice-in-the-field-of-farmland.jpg?s=612x612&w=0&k=20&c=grtA7L3dm_SP80Fdt-PpIwu5GYacZygErTDUDNIKHwY='),
+('Wheat', 'Chicago', 'Illinois', 245.00, 255.25, 'https://media.istockphoto.com/id/622925154/photo/ripe-rice-in-the-field-of-farmland.jpg?s=612x612&w=0&k=20&c=grtA7L3dm_SP80Fdt-PpIwu5GYacZygErTDUDNIKHwY='),
+('Wheat', 'Houston', 'Texas', 240.75, 250.00, 'https://media.istockphoto.com/id/622925154/photo/ripe-rice-in-the-field-of-farmland.jpg?s=612x612&w=0&k=20&c=grtA7L3dm_SP80Fdt-PpIwu5GYacZygErTDUDNIKHwY='),
+('Wheat', 'Denver', 'Colorado', 238.00, 248.50, 'https://media.istockphoto.com/id/622925154/photo/ripe-rice-in-the-field-of-farmland.jpg?s=612x612&w=0&k=20&c=grtA7L3dm_SP80Fdt-PpIwu5GYacZygErTDUDNIKHwY='),
+('Wheat', 'Phoenix', 'Arizona', 235.25, 245.75, 'https://media.istockphoto.com/id/622925154/photo/ripe-rice-in-the-field-of-farmland.jpg?s=612x612&w=0&k=20&c=grtA7L3dm_SP80Fdt-PpIwu5GYacZygErTDUDNIKHwY='),
+
+-- Rice Prices
+('Rice', 'New York', 'New York', 180.00, 185.50, 'https://example.com/rice.jpg'),
+('Rice', 'Miami', 'Florida', 175.50, 180.00, 'https://example.com/rice.jpg'),
+('Rice', 'Seattle', 'Washington', 170.25, 176.50, 'https://example.com/rice.jpg'),
+('Rice', 'Boston', 'Massachusetts', 168.75, 173.25, 'https://example.com/rice.jpg'),
+('Rice', 'San Diego', 'California', 165.50, 170.75, 'https://example.com/rice.jpg'),
+
+-- Corn Prices
+('Corn', 'San Francisco', 'California', 190.00, 195.50, 'https://example.com/corn.jpg'),
+('Corn', 'Denver', 'Colorado', 185.75, 190.25, 'https://example.com/corn.jpg'),
+('Corn', 'Dallas', 'Texas', 180.50, 185.00, 'https://example.com/corn.jpg'),
+('Corn', 'Orlando', 'Florida', 178.25, 183.50, 'https://example.com/corn.jpg'),
+('Corn', 'Philadelphia', 'Pennsylvania', 175.00, 180.50, 'https://example.com/corn.jpg'),
+
+-- Soybean Prices
+('Soybean', 'Seattle', 'Washington', 260.00, 265.75, 'https://example.com/soybean.jpg'),
+('Soybean', 'Atlanta', 'Georgia', 255.50, 260.00, 'https://example.com/soybean.jpg'),
+('Soybean', 'Minneapolis', 'Minnesota', 250.75, 256.25, 'https://example.com/soybean.jpg'),
+('Soybean', 'Portland', 'Oregon', 248.00, 253.75, 'https://example.com/soybean.jpg'),
+('Soybean', 'Detroit', 'Michigan', 245.50, 250.75, 'https://example.com/soybean.jpg');
+
+
+
+CREATE TABLE crop_storage (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    state VARCHAR(100),
+    district VARCHAR(100),
+    crop_name VARCHAR(100),
+    stored_tons INT,
+    required_tons INT,
+    time_limit INT -- Time limit in months for refilling
+);
+
+
+INSERT INTO crop_storage (state, district, crop_name, stored_tons, required_tons, time_limit) VALUES
+('Maharashtra', 'Pune', 'Wheat', 5000, 7000, 3),
+('Maharashtra', 'Mumbai', 'Rice', 3000, 5000, 2),
+('Maharashtra', 'Nagpur', 'Jowar', 4000, 6000, 4),
+('Maharashtra', 'Nashik', 'Bajra', 3500, 5000, 3),
+('Maharashtra', 'Kolhapur', 'Sugarcane', 9000, 11000, 6),
+
+('Punjab', 'Ludhiana', 'Maize', 6000, 8000, 4),
+('Punjab', 'Amritsar', 'Wheat', 7000, 9000, 3),
+('Punjab', 'Patiala', 'Barley', 5000, 7000, 5),
+('Punjab', 'Jalandhar', 'Rice', 8000, 10000, 4),
+('Punjab', 'Bathinda', 'Cotton', 7000, 9000, 6),
+
+('Karnataka', 'Bangalore', 'Millets', 4000, 6000, 5),
+('Karnataka', 'Mysore', 'Ragi', 3500, 5000, 3),
+('Karnataka', 'Belgaum', 'Sugarcane', 9500, 12000, 6),
+('Karnataka', 'Dharwad', 'Maize', 6000, 8000, 4),
+('Karnataka', 'Shimoga', 'Coffee', 5000, 7000, 3),
+
+('Gujarat', 'Ahmedabad', 'Groundnut', 4000, 6000, 5),
+('Gujarat', 'Surat', 'Cotton', 7000, 9000, 6),
+('Gujarat', 'Vadodara', 'Rice', 8000, 10000, 4),
+('Gujarat', 'Rajkot', 'Wheat', 5000, 7000, 3),
+('Gujarat', 'Bhavnagar', 'Sesame', 3000, 4500, 2),
+
+('Rajasthan', 'Jaipur', 'Bajra', 6000, 8000, 5),
+('Rajasthan', 'Jodhpur', 'Barley', 7000, 9000, 6),
+('Rajasthan', 'Udaipur', 'Wheat', 5000, 7000, 3),
+('Rajasthan', 'Bikaner', 'Cotton', 4000, 6000, 4),
+('Rajasthan', 'Ajmer', 'Maize', 3000, 5000, 3),
+
+('Uttar Pradesh', 'Lucknow', 'Wheat', 8000, 10000, 4),
+('Uttar Pradesh', 'Kanpur', 'Rice', 7000, 9000, 3),
+('Uttar Pradesh', 'Varanasi', 'Sugarcane', 12000, 15000, 6),
+('Uttar Pradesh', 'Agra', 'Potato', 5000, 7000, 3),
+('Uttar Pradesh', 'Allahabad', 'Pulses', 4000, 6000, 4),
+
+('Madhya Pradesh', 'Bhopal', 'Soybean', 7000, 9000, 6),
+('Madhya Pradesh', 'Indore', 'Wheat', 8000, 10000, 4),
+('Madhya Pradesh', 'Gwalior', 'Rice', 6000, 8000, 5),
+('Madhya Pradesh', 'Jabalpur', 'Cotton', 5000, 7000, 3),
+('Madhya Pradesh', 'Ujjain', 'Maize', 4000, 6000, 4),
+
+('Tamil Nadu', 'Chennai', 'Paddy', 7000, 9000, 6),
+('Tamil Nadu', 'Coimbatore', 'Sugarcane', 8000, 10000, 4),
+('Tamil Nadu', 'Madurai', 'Millets', 5000, 7000, 3),
+('Tamil Nadu', 'Trichy', 'Groundnut', 4000, 6000, 4),
+('Tamil Nadu', 'Salem', 'Turmeric', 3000, 5000, 3),
+
+('West Bengal', 'Kolkata', 'Jute', 6000, 8000, 5),
+('West Bengal', 'Darjeeling', 'Tea', 9000, 11000, 6),
+('West Bengal', 'Asansol', 'Rice', 8000, 10000, 4),
+('West Bengal', 'Durgapur', 'Potato', 5000, 7000, 3),
+('West Bengal', 'Howrah', 'Wheat', 4000, 6000, 4),
+
+('Bihar', 'Patna', 'Wheat', 7000, 9000, 3),
+('Bihar', 'Gaya', 'Rice', 6000, 8000, 5),
+('Bihar', 'Bhagalpur', 'Maize', 5000, 7000, 3),
+('Bihar', 'Muzaffarpur', 'Sugarcane', 4000, 6000, 4),
+('Bihar', 'Purnia', 'Jute', 3000, 5000, 3),
+
+('Odisha', 'Bhubaneswar', 'Rice', 7000, 9000, 6),
+('Odisha', 'Cuttack', 'Maize', 6000, 8000, 4),
+('Odisha', 'Rourkela', 'Millets', 5000, 7000, 3),
+('Odisha', 'Berhampur', 'Groundnut', 4000, 6000, 4),
+('Odisha', 'Sambalpur', 'Pulses', 3000, 5000, 3),
+
+('Telangana', 'Hyderabad', 'Paddy', 8000, 10000, 4),
+('Telangana', 'Warangal', 'Cotton', 7000, 9000, 3),
+('Telangana', 'Karimnagar', 'Maize', 6000, 8000, 5),
+('Telangana', 'Khammam', 'Sugarcane', 5000, 7000, 3),
+('Telangana', 'Nizamabad', 'Turmeric', 4000, 6000, 4),
+
+('Assam', 'Guwahati', 'Tea', 9000, 11000, 6),
+('Assam', 'Dibrugarh', 'Rice', 8000, 10000, 4),
+('Assam', 'Silchar', 'Maize', 6000, 8000, 5),
+('Assam', 'Tezpur', 'Jute', 5000, 7000, 3),
+('Assam', 'Jorhat', 'Pulses', 4000, 6000, 4);
+
+
+
+
+
+
+CREATE TABLE crop_rotation (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    state VARCHAR(100),
+    district VARCHAR(100),
+    current_crop VARCHAR(100),
+    next_crop VARCHAR(100),
+    recommended_rotation TEXT
+);
+
+
+
+INSERT INTO crop_rotation (state, district, current_crop, next_crop, recommended_rotation) VALUES
+('Maharashtra', 'Solapur', 'Jowar', 'Bajra', 'Jowar → Bajra → Chickpea'),
+('Maharashtra', 'Aurangabad', 'Sugarcane', 'Turmeric', 'Sugarcane → Turmeric → Maize'),
+('Maharashtra', 'Kolhapur', 'Rice', 'Groundnut', 'Rice → Groundnut → Pulses'),
+('Punjab', 'Bathinda', 'Cotton', 'Wheat', 'Cotton → Wheat → Green Gram'),
+('Punjab', 'Pathankot', 'Mustard', 'Paddy', 'Mustard → Paddy → Lentil'),
+('Karnataka', 'Gulbarga', 'Sunflower', 'Groundnut', 'Sunflower → Groundnut → Sorghum'),
+('Karnataka', 'Belgaum', 'Sugarcane', 'Soybean', 'Sugarcane → Soybean → Jowar'),
+('Tamil Nadu', 'Tirunelveli', 'Black Gram', 'Green Gram', 'Black Gram → Green Gram → Paddy'),
+('Tamil Nadu', 'Erode', 'Coconut', 'Maize', 'Coconut → Maize → Pulses'),
+('Gujarat', 'Bhavnagar', 'Sesame', 'Groundnut', 'Sesame → Groundnut → Cumin'),
+('Gujarat', 'Vadodara', 'Rice', 'Pulses', 'Rice → Pulses → Wheat'),
+('Madhya Pradesh', 'Jabalpur', 'Soybean', 'Mustard', 'Soybean → Mustard → Chickpea'),
+('Madhya Pradesh', 'Satna', 'Maize', 'Paddy', 'Maize → Paddy → Pulses'),
+('West Bengal', 'Darjeeling', 'Tea', 'Spices', 'Tea → Spices → Vegetables'),
+('West Bengal', 'Medinipur', 'Rice', 'Potato', 'Rice → Potato → Mustard'),
+('Uttar Pradesh', 'Gorakhpur', 'Sugarcane', 'Wheat', 'Sugarcane → Wheat → Barley'),
+('Uttar Pradesh', 'Meerut', 'Pulses', 'Maize', 'Pulses → Maize → Sugarcane'),
+('Bihar', 'Bhagalpur', 'Maize', 'Rice', 'Maize → Rice → Mustard'),
+('Bihar', 'Sitamarhi', 'Banana', 'Turmeric', 'Banana → Turmeric → Wheat'),
+('Rajasthan', 'Bikaner', 'Bajra', 'Wheat', 'Bajra → Wheat → Gram'),
+('Rajasthan', 'Ajmer', 'Coriander', 'Fenugreek', 'Coriander → Fenugreek → Mustard'),
+('Andhra Pradesh', 'Vijayawada', 'Paddy', 'Cotton', 'Paddy → Cotton → Green Gram'),
+('Andhra Pradesh', 'Nellore', 'Groundnut', 'Pulses', 'Groundnut → Pulses → Millets'),
+('Telangana', 'Hyderabad', 'Millets', 'Soybean', 'Millets → Soybean → Green Gram'),
+('Telangana', 'Warangal', 'Cotton', 'Rice', 'Cotton → Rice → Chickpea'),
+('Odisha', 'Bhubaneswar', 'Paddy', 'Groundnut', 'Paddy → Groundnut → Pulses'),
+('Odisha', 'Cuttack', 'Maize', 'Pulses', 'Maize → Pulses → Sorghum'),
+('Chhattisgarh', 'Raipur', 'Rice', 'Mustard', 'Rice → Mustard → Green Gram'),
+('Chhattisgarh', 'Bilaspur', 'Sugarcane', 'Turmeric', 'Sugarcane → Turmeric → Wheat'),
+('Jharkhand', 'Ranchi', 'Paddy', 'Maize', 'Paddy → Maize → Chickpea'),
+('Jharkhand', 'Jamshedpur', 'Mustard', 'Pulses', 'Mustard → Pulses → Sorghum'),
+('Haryana', 'Chandigarh', 'Wheat', 'Maize', 'Wheat → Maize → Sugarcane'),
+('Haryana', 'Rohtak', 'Rice', 'Sugarcane', 'Rice → Sugarcane → Pulses'),
+('Himachal Pradesh', 'Shimla', 'Apple', 'Peach', 'Apple → Peach → Plum'),
+('Himachal Pradesh', 'Kullu', 'Potato', 'Peas', 'Potato → Peas → Maize'),
+('Uttarakhand', 'Dehradun', 'Wheat', 'Maize', 'Wheat → Maize → Barley'),
+('Uttarakhand', 'Nainital', 'Pulses', 'Millets', 'Pulses → Millets → Barley'),
+('Assam', 'Guwahati', 'Rice', 'Mustard', 'Rice → Mustard → Green Gram'),
+('Assam', 'Silchar', 'Tea', 'Spices', 'Tea → Spices → Vegetables'),
+('Meghalaya', 'Shillong', 'Pineapple', 'Turmeric', 'Pineapple → Turmeric → Maize'),
+('Meghalaya', 'Tura', 'Orange', 'Pulses', 'Orange → Pulses → Black Gram'),
+('Manipur', 'Imphal', 'Rice', 'Maize', 'Rice → Maize → Pulses'),
+('Nagaland', 'Kohima', 'Millets', 'Soybean', 'Millets → Soybean → Groundnut'),
+('Tripura', 'Agartala', 'Sugarcane', 'Banana', 'Sugarcane → Banana → Wheat'),
+('Mizoram', 'Aizawl', 'Bamboo', 'Turmeric', 'Bamboo → Turmeric → Ginger'),
+('Arunachal Pradesh', 'Itanagar', 'Maize', 'Pulses', 'Maize → Pulses → Mustard'),
+('Sikkim', 'Gangtok', 'Cardamom', 'Spices', 'Cardamom → Spices → Rice'),
+('Goa', 'Panaji', 'Cashew', 'Rice', 'Cashew → Rice → Coconut'),
+('Dadra and Nagar Haveli', 'Silvassa', 'Millets', 'Groundnut', 'Millets → Groundnut → Pulses'),
+('Daman and Diu', 'Daman', 'Coconut', 'Paddy', 'Coconut → Paddy → Black Gram'),
+('Lakshadweep', 'Kavaratti', 'Coconut', 'Banana', 'Coconut → Banana → Turmeric'),
+('Puducherry', 'Puducherry', 'Paddy', 'Sugarcane', 'Paddy → Sugarcane → Pulses'),
+('Andaman and Nicobar', 'Port Blair', 'Coconut', 'Arecanut', 'Coconut → Arecanut → Spices');
+
+
+
+CREATE TABLE irrigation_data (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    state VARCHAR(100),
+    district VARCHAR(100),
+    crop VARCHAR(100),
+    ideal_moisture_range VARCHAR(50),
+    irrigation_frequency VARCHAR(50),
+    recommended_irrigation TEXT
+);
+
+
+INSERT INTO irrigation_data (state, district, crop, ideal_moisture_range, irrigation_frequency, recommended_irrigation) VALUES
+-- Maharashtra (Pune)
+('Maharashtra', 'Pune', 'Wheat', '40-60%', 'Every 5 Days', 'Drip Irrigation Recommended'),
+('Maharashtra', 'Pune', 'Rice', '60-80%', 'Every 7 Days', 'Flood Irrigation'),
+('Maharashtra', 'Pune', 'Jowar', '30-50%', 'Every 6 Days', 'Sprinkler Irrigation'),
+('Maharashtra', 'Pune', 'Bajra', '35-55%', 'Every 8 Days', 'Surface Irrigation'),
+('Maharashtra', 'Pune', 'Cotton', '30-50%', 'Every 7 Days', 'Drip Irrigation Preferred'),
+('Maharashtra', 'Pune', 'Sugarcane', '60-80%', 'Every 7-10 Days', 'Furrow Irrigation Recommended'),
+('Maharashtra', 'Pune', 'Maize', '40-60%', 'Every 5 Days', 'Drip Irrigation'),
+('Maharashtra', 'Pune', 'Turmeric', '50-70%', 'Every 6 Days', 'Sprinkler Irrigation'),
+('Maharashtra', 'Pune', 'Soybean', '40-60%', 'Every 4 Days', 'Surface Irrigation'),
+('Maharashtra', 'Pune', 'Groundnut', '35-55%', 'Every 5 Days', 'Drip Irrigation'),
+
+-- Punjab (Ludhiana)
+('Punjab', 'Ludhiana', 'Rice', '70-90%', 'Flooding Required', 'Traditional Flood Irrigation'),
+('Punjab', 'Ludhiana', 'Wheat', '40-60%', 'Every 5 Days', 'Sprinkler Irrigation'),
+('Punjab', 'Ludhiana', 'Maize', '40-60%', 'Every 4 Days', 'Drip Irrigation'),
+('Punjab', 'Ludhiana', 'Sugarcane', '60-80%', 'Every 7-10 Days', 'Furrow Irrigation'),
+('Punjab', 'Ludhiana', 'Barley', '35-55%', 'Every 6 Days', 'Surface Irrigation'),
+('Punjab', 'Ludhiana', 'Potato', '50-70%', 'Every 5 Days', 'Sprinkler Irrigation'),
+('Punjab', 'Ludhiana', 'Pulses', '40-60%', 'Every 6 Days', 'Minimal Irrigation Needed'),
+('Punjab', 'Ludhiana', 'Mustard', '30-50%', 'Every 8 Days', 'Drip Irrigation Preferred'),
+('Punjab', 'Ludhiana', 'Soybean', '40-60%', 'Every 4 Days', 'Drip Irrigation'),
+('Punjab', 'Ludhiana', 'Chickpea', '35-55%', 'Every 5 Days', 'Surface Irrigation'),
+
+-- Tamil Nadu (Coimbatore)
+('Tamil Nadu', 'Coimbatore', 'Paddy', '60-80%', 'Alternate Wetting & Drying', 'Surface Irrigation Recommended'),
+('Tamil Nadu', 'Coimbatore', 'Banana', '50-70%', 'Every 3 Days', 'Drip Irrigation'),
+('Tamil Nadu', 'Coimbatore', 'Coconut', '40-60%', 'Every 5 Days', 'Drip Irrigation'),
+('Tamil Nadu', 'Coimbatore', 'Sugarcane', '60-80%', 'Every 7 Days', 'Furrow Irrigation'),
+('Tamil Nadu', 'Coimbatore', 'Groundnut', '35-55%', 'Every 6 Days', 'Sprinkler Irrigation'),
+('Tamil Nadu', 'Coimbatore', 'Turmeric', '50-70%', 'Every 6 Days', 'Sprinkler Irrigation'),
+('Tamil Nadu', 'Coimbatore', 'Ragi', '40-60%', 'Every 8 Days', 'Surface Irrigation'),
+('Tamil Nadu', 'Coimbatore', 'Maize', '40-60%', 'Every 4 Days', 'Drip Irrigation'),
+('Tamil Nadu', 'Coimbatore', 'Chili', '30-50%', 'Every 5 Days', 'Drip Irrigation'),
+('Tamil Nadu', 'Coimbatore', 'Jowar', '35-55%', 'Every 7 Days', 'Surface Irrigation'),
+
+-- Gujarat (Ahmedabad)
+('Gujarat', 'Ahmedabad', 'Cotton', '30-50%', 'Every 7 Days', 'Drip Irrigation Preferred'),
+('Gujarat', 'Ahmedabad', 'Cumin', '25-40%', 'Every 5 Days', 'Sprinkler Irrigation'),
+('Gujarat', 'Ahmedabad', 'Groundnut', '35-55%', 'Every 6 Days', 'Drip Irrigation'),
+('Gujarat', 'Ahmedabad', 'Bajra', '30-50%', 'Every 7 Days', 'Surface Irrigation'),
+('Gujarat', 'Ahmedabad', 'Sesame', '35-50%', 'Every 8 Days', 'Minimal Irrigation Needed'),
+('Gujarat', 'Ahmedabad', 'Mustard', '30-50%', 'Every 7 Days', 'Drip Irrigation'),
+('Gujarat', 'Ahmedabad', 'Chili', '40-60%', 'Every 4 Days', 'Sprinkler Irrigation'),
+('Gujarat', 'Ahmedabad', 'Wheat', '40-60%', 'Every 5 Days', 'Drip Irrigation'),
+('Gujarat', 'Ahmedabad', 'Rice', '60-80%', 'Every 6 Days', 'Flood Irrigation'),
+('Gujarat', 'Ahmedabad', 'Turmeric', '50-70%', 'Every 6 Days', 'Surface Irrigation'),
+
+-- Karnataka (Bangalore)
+('Karnataka', 'Bangalore', 'Millets', '25-45%', 'Every 10 Days', 'Minimal Irrigation Needed'),
+('Karnataka', 'Bangalore', 'Ragi', '35-55%', 'Every 8 Days', 'Sprinkler Irrigation'),
+('Karnataka', 'Bangalore', 'Turmeric', '50-70%', 'Every 6 Days', 'Surface Irrigation'),
+('Karnataka', 'Bangalore', 'Coconut', '40-60%', 'Every 5 Days', 'Drip Irrigation'),
+('Karnataka', 'Bangalore', 'Banana', '50-70%', 'Every 3 Days', 'Drip Irrigation'),
+('Karnataka', 'Bangalore', 'Sugarcane', '60-80%', 'Every 7 Days', 'Furrow Irrigation'),
+('Karnataka', 'Bangalore', 'Groundnut', '35-55%', 'Every 6 Days', 'Sprinkler Irrigation'),
+('Karnataka', 'Bangalore', 'Soybean', '40-60%', 'Every 4 Days', 'Drip Irrigation'),
+('Karnataka', 'Bangalore', 'Pulses', '30-50%', 'Every 5 Days', 'Minimal Irrigation'),
+('Karnataka', 'Bangalore', 'Jowar', '35-55%', 'Every 7 Days', 'Surface Irrigation'),
+
+-- West Bengal (Kolkata)
+('West Bengal', 'Kolkata', 'Potato', '50-70%', 'Every 5 Days', 'Sprinkler or Furrow Irrigation'),
+('West Bengal', 'Kolkata', 'Rice', '60-80%', 'Every 6 Days', 'Flood Irrigation'),
+('West Bengal', 'Kolkata', 'Tea', '70-90%', 'Every 3 Days', 'Drip Irrigation'),
+('West Bengal', 'Kolkata', 'Jute', '60-80%', 'Every 5 Days', 'Flood Irrigation'),
+('West Bengal', 'Kolkata', 'Sugarcane', '60-80%', 'Every 7-10 Days', 'Furrow Irrigation'),
+('West Bengal', 'Kolkata', 'Mustard', '30-50%', 'Every 7 Days', 'Drip Irrigation'),
+('West Bengal', 'Kolkata', 'Pulses', '40-60%', 'Every 6 Days', 'Minimal Irrigation'),
+('West Bengal', 'Kolkata', 'Soybean', '40-60%', 'Every 4 Days', 'Drip Irrigation'),
+('West Bengal', 'Kolkata', 'Banana', '50-70%', 'Every 3 Days', 'Drip Irrigation'),
+('West Bengal', 'Kolkata', 'Chili', '40-60%', 'Every 4 Days', 'Sprinkler Irrigation');
+
+
+

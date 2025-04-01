@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-size: cover;
+            background-position: center;
+            transition: background-image 1s ease-in-out;
+        }
+        .text{
+            color: rgb(35, 124, 69);
+            padding-bottom: 30px;
+            padding-top: 20px;
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex justify-center items-center">
+    <div class="bg-white p-6 rounded-xl shadow-2xl w-98 text-center">
+        <h2 class="text font-bold mb-4">REGISTER ON THE FARMINTEL</h2>
+        <form method="POST" class="space-y-6">
+            <input type="text" name="username" placeholder="USERNAME" required class="w-full px-8 py-4 text-xl border rounded-lg shadow-lg focus:ring focus:ring-blue-300 text-center">
+            <input type="password" name="password" placeholder="PASSWORD" required class="w-full px-8 py-4 text-xl border rounded-lg shadow-lg focus:ring focus:ring-blue-300 text-center">
+            <button type="submit" class="w-full bg-green-400 text-white py-3 rounded-lg transition transform hover:bg-green-700 hover:scale-105 duration-300">REGISTER</button>
+        </form>
+    </div>
+
+    <script>
+        const cropImages = [
+            'url(https://rodaleinstitute.org/wp-content/uploads/FST_MitchM.jpg)',
+            'url(https://images.unsplash.com/photo-1511735643442-503bb3bd348a?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y3JvcHxlbnwwfHwwfHx8MA%3D%3D)',
+            'url(https://t3.ftcdn.net/jpg/06/00/25/06/360_F_600250616_kmZP9SOecH9ENlBa1eO0G2W05BicQObf.jpg)',
+            'url(https://images.pexels.com/photos/461960/pexels-photo-461960.jpeg?cs=srgb&dl=pexels-pixabay-461960.jpg&fm=jpg)'
+        ];
+        let index = 0;
+        function changeBackground() {
+            document.body.style.backgroundImage = cropImages[index];
+            index = (index + 1) % cropImages.length;
+        }
+        setInterval(changeBackground, 2000);
+        changeBackground();
+    </script>
+</body>
+</html>

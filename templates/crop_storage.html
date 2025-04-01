@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Storage Management</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Page Background */
+        body {
+            background: linear-gradient(to right, #c1eaff, #b8ffc4);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        /* Heading */
+        h2 {
+            color: #2e7d32;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Label Styling */
+        label {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1b5e20;
+            margin-bottom: 10px;
+        }
+
+        /* Dropdown Styling */
+        select {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #2e7d32;
+            border-radius: 8px;
+            outline: none;
+            background-color: #ffffff;
+            color: #333;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        select:hover {
+            border-color: #1b5e20;
+        }
+
+        /* Table Container */
+        .table-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        /* Table Styling */
+        table {
+            width: 80%;
+            max-width: 1000px;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        /* Table Header */
+        th {
+            background-color: #2e7d32;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+        }
+
+        /* Table Cells */
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        /* Alternate Row Colors */
+        tr:nth-child(even) {
+            background-color: #f1f8e9;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #e8f5e9;
+        }
+
+        .back-button {
+            width: 100%;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-button a button {
+            width: 15%;
+            background-color: #388e3c;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button a button:hover {
+            background-color: #1b5e20;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Crop Storage Management</h2>
+    
+    <label for="state">Select State:</label>
+    <select id="state">
+        <option value="">-- Select State --</option>
+        {% for state in states %}
+        <option value="{{ state }}">{{ state }}</option>
+        {% endfor %}
+    </select>
+
+    <div class="table-container">
+        <table id="crop-table" style="display:none;">
+            <thead>
+                <tr>
+                    <th>District</th>
+                    <th>Crop Name</th>
+                    <th>Stored (Tons)</th>
+                    <th>Required (Tons)</th>
+                    <th>Time Limit (Months)</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+       
+    </div>
+    <div class="back-button">
+        <a href="{{ url_for('nav') }}">
+            <button>Back to Navigation</button>
+        </a>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('#state').change(function(){
+                var state = $(this).val();
+                if (state) {
+                    $.ajax({
+                        url: "/get-crop-data",
+                        type: "POST",
+                        data: { state: state },
+                        success: function(response) {
+                            var tableBody = $("#crop-table tbody");
+                            tableBody.empty();
+                            if (response.length > 0) {
+                                response.forEach(function(row) {
+                                    tableBody.append(`<tr>
+                                        <td>${row.district}</td>
+                                        <td>${row.crop_name}</td>
+                                        <td>${row.stored_tons}</td>
+                                        <td>${row.required_tons}</td>
+                                        <td>${row.time_limit}</td>
+                                    </tr>`);
+                                });
+                                $("#crop-table").show();
+                            } else {
+                                $("#crop-table").hide();
+                            }
+                        }
+                    });
+                } else {
+                    $("#crop-table").hide();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

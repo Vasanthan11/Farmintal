@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Disease Recognition</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #c1eaff, #b8ffc4);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffffdd;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 1200px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #2e7d32;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 18px;
+        }
+
+        .btn-upload {
+            background-color: #2e7d32;
+            color: white;
+            padding: 14px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-upload:hover {
+            background-color: #1b5e20;
+        }
+
+        .image-box {
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            background-color: #f0f4f8;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            overflow: hidden;
+            border: 2px dashed #ccc;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .placeholder-text {
+            color: #888;
+            font-size: 18px;
+        }
+
+        .info-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #e8f5e9;
+            border-left: 6px solid #2e7d32;
+            border-radius: 10px;
+            color: #2e7d32;
+            text-align: left;
+        }
+
+        .disease-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .disease-table th, .disease-table td {
+            border: 1px solid #ddd;
+            padding: 14px;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        .disease-table th {
+            background: #007bff;
+            color: white;
+        }
+
+        .highlight {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .back-button {
+            margin-top: 20px;
+        }
+
+        .back-button a button {
+            background-color: #388e3c;
+            color: white;
+            padding: 14px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .back-button a button:hover {
+            background-color: #1b5e20;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Crop Disease Recognition</h2>
+
+        <!-- Upload Form -->
+        <form action="{{ url_for('crop_disease.crop_disease') }}" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="file" class="form-label">Upload an Image:</label>
+                <input type="file" name="file" class="form-control" required>
+            </div>
+            <button type="submit" class="btn-upload">Upload Image</button>
+        </form>
+
+        <!-- Image Placeholder -->
+        <div class="image-box">
+            {% if filename %}
+                <img src="{{ url_for('static', filename='uploads/' + filename) }}" alt="Uploaded Image">
+            {% else %}
+                <p class="placeholder-text">No Image Uploaded</p>
+            {% endif %}
+        </div>
+
+        {% if filename and diseases %}
+            <div class="info-box">
+                <h4 class="text-success">Disease Information</h4>
+                <p><strong>Crop Name:</strong> <span class="highlight">{{ crop_name.capitalize() }}</span></p>
+
+                <h3>Possible Diseases:</h3>
+                <table class="disease-table">
+                    <tr>
+                        <th>Disease Name</th>
+                        <th>Prevention</th>
+                        <th>Expected Yield</th>
+                    </tr>
+                    {% for disease in diseases %}
+                        <tr>
+                            <td>{{ disease.disease_name }}</td>
+                            <td>{{ disease.prevention_measures }}</td>
+                            <td>{{ disease.expected_yield }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% else %}
+            {% if filename %}
+                <div class="alert alert-danger mt-3">No matching disease found in the database.</div>
+            {% endif %}
+        {% endif %}
+
+        {% if error %}
+            <div class="alert alert-danger mt-3">{{ error }}</div>
+        {% endif %}
+
+        <div class="back-button">
+            <a href="{{ url_for('nav') }}">
+                <button>Back to Navigation</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

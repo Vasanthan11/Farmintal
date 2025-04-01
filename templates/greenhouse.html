@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greenhouse Monitoring</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #c1eaff, #b8ffc4);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffffdd;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .alert {
+            font-weight: bold;
+        }
+
+        canvas {
+            margin-top: 20px;
+        }
+
+        .back-button {
+            width: 100%;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-button a button {
+            width: 100%;
+            background-color: #388e3c;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button a button:hover {
+            background-color: #1b5e20;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Automated Greenhouse Control</h2>
+        
+        {% if alert %}
+            <div class="alert alert-danger">⚠️ {{ alert }}</div>
+        {% endif %}
+
+        <table class="table table-bordered mt-3">
+            <thead class="table-success">
+                <tr>
+                    <th>Parameter</th>
+                    <th>Value</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Temperature (°C)</td>
+                    <td>{{ temperature }}</td>
+                    <td>{% if temperature > 35 %} 🔥 High {% elif temperature < 15 %} ❄️ Low {% else %} ✅ Normal {% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Humidity (%)</td>
+                    <td>{{ humidity }}</td>
+                    <td>{% if humidity < 30 %} 🔴 Low {% elif humidity > 80 %} 🔵 High {% else %} ✅ Normal {% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Soil Moisture (%)</td>
+                    <td>{{ soil_moisture }}</td>
+                    <td>{% if soil_moisture < 20 %} 🏜️ Dry {% elif soil_moisture > 80 %} 🌊 Overwatered {% else %} ✅ Normal {% endif %}</td>
+                </tr>
+                <tr>
+                    <td>CO₂ Levels (ppm)</td>
+                    <td>{{ co2_level }}</td>
+                    <td>{% if co2_level > 1000 %} 🚨 High {% elif co2_level < 300 %} ⚠️ Low {% else %} ✅ Normal {% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Light Intensity (lux)</td>
+                    <td>{{ light_intensity }}</td>
+                    <td>{% if light_intensity < 200 %} 🌑 Low {% elif light_intensity > 8000 %} ☀️ High {% else %} ✅ Normal {% endif %}</td>
+                </tr>
+                <tr>
+                    <td>pH Level</td>
+                    <td>{{ ph_level }}</td>
+                    <td>{% if ph_level < 5.5 %} ⚠️ Acidic {% elif ph_level > 7.5 %} ⚠️ Alkaline {% else %} ✅ Optimal {% endif %}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <canvas id="climateChart" width="400" height="200"></canvas>
+
+        <div class="back-button">
+            <a href="{{ url_for('nav') }}">
+                <button>Back to Navigation</button>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('climateChart').getContext('2d');
+        var climateChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: JSON.parse('{{ timestamps | tojson | safe }}'),
+                datasets: [
+                    {
+                        label: 'Temperature (°C)',
+                        data: JSON.parse('{{ temperature_data | tojson | safe }}'),
+                        borderColor: 'red',
+                        fill: false
+                    },
+                    {
+                        label: 'Humidity (%)',
+                        data: JSON.parse('{{ humidity_data | tojson | safe }}'),
+                        borderColor: 'blue',
+                        fill: false
+                    },
+                    {
+                        label: 'Soil Moisture (%)',
+                        data: JSON.parse('{{ soil_moisture_data | tojson | safe }}'),
+                        borderColor: 'green',
+                        fill: false
+                    },
+                    {
+                        label: 'CO₂ Levels (ppm)',
+                        data: JSON.parse('{{ co2_data | tojson | safe }}'),
+                        borderColor: 'purple',
+                        fill: false
+                    },
+                    {
+                        label: 'Light Intensity (lux)',
+                        data: JSON.parse('{{ light_data | tojson | safe }}'),
+                        borderColor: 'orange',
+                        fill: false
+                    },
+                    {
+                        label: 'pH Level',
+                        data: JSON.parse('{{ ph_data | tojson | safe }}'),
+                        borderColor: 'brown',
+                        fill: false
+                    }
+                ]
+            }
+        });
+    </script>
+    
+</body>
+</html>

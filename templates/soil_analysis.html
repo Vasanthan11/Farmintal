@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #c1eaff, #b8ffc4);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffffdd;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2e7d32;
+            font-size: 28px;
+        }
+
+        form label {
+            font-weight: 600;
+            margin-top: 10px;
+            display: block;
+            color: #333;
+        }
+
+        form input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+        }
+
+        form button {
+            width: 100%;
+            background-color: #2e7d32;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        form button:hover {
+            background-color: #1b5e20;
+        }
+
+        .recommendation {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #e8f5e9;
+            border-left: 6px solid #2e7d32;
+            border-radius: 10px;
+            color: #2e7d32;
+        }
+
+        .recommendation h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .recommendation ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .recommendation li {
+            background-color: #c8e6c9;
+            margin-bottom: 8px;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .back-button {
+            width: 100%;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-button a button {
+            width: 100%;
+            background-color: #388e3c;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button a button:hover {
+            background-color: #1b5e20;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enter Soil Nutrient Values</h2>
+        <form method="POST">
+            <label for="nitrogen">Nitrogen (N)</label>
+            <input type="number" name="nitrogen" step="0.1" required>
+
+            <label for="phosphorus">Phosphorus (P)</label>
+            <input type="number" name="phosphorus" step="0.1" required>
+
+            <label for="potassium">Potassium (K)</label>
+            <input type="number" name="potassium" step="0.1" required>
+
+            <label for="pH">pH Level</label>
+            <input type="number" name="pH" step="0.1" required>
+
+            <label for="organic_matter">Organic Matter (%)</label>
+            <input type="number" name="organic_matter" step="0.1" required>
+
+            <button type="submit">Check Suitable Crops</button>
+        </form>
+
+        {% if recommended_crops %}
+        <div class="recommendation">
+            <h3>Recommended Crops</h3>
+            <ul>
+                {% for crop in recommended_crops %}
+                    <li>{{ crop }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <div class="back-button">
+            <a href="{{ url_for('nav') }}">
+                <button>Back to Navigation</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

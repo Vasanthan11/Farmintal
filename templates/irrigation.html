@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irrigation Controller</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<style>
+    /* General Page Styling */
+body {
+    background: linear-gradient(to right, #c1eaff, #b8ffc4);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+    padding: 40px 20px;
+    color: #333;
+}
+
+/* Main Container with Card Layout */
+.container {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 850px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+}
+
+.container:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* Heading */
+h2 {
+    color: #1b5e20;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 25px !important;
+}
+
+/* Form Section */
+.form-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2e7d32;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Dropdown Styling */
+select {
+    width: 100%;
+    max-width: 450px;
+    padding: 14px;
+    font-size: 16px;
+    border: 2px solid #2e7d32;
+    border-radius: 10px;
+    outline: none;
+    background-color: #ffffff;
+    color: #333;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+select:hover {
+    border-color: #1b5e20;
+    background-color: #f8fff8;
+ 
+}
+
+/* Table Section */
+.table-container {
+    margin-top: 30px;
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+th {
+    background-color: #2e7d32;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+td {
+    padding: 14px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    font-size: 15px;
+}
+
+tr:nth-child(even) {
+    background-color: #f1f8e9;
+}
+
+tr:nth-child(odd) {
+    background-color: #e8f5e9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 25px;
+    }
+    
+    select {
+        width: 100%;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    
+    table {
+        font-size: 13px;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+}
+
+.back-button {
+            width: 100%;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-button a button {
+            width: 30%;
+            background-color: #388e3c;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button a button:hover {
+            background-color: #1b5e20;
+        }
+
+</style>
+<body>
+    <div class="container">
+        <h2>Irrigation Controller</h2>
+        
+        <label for="state">Select a State:</label>
+        <select id="state" name="state">
+            <option value="">-- Select State --</option>
+            {% for state in states %}
+            <option value="{{ state }}">{{ state }}</option>
+            {% endfor %}
+        </select>
+
+        <table id="irrigation-table" style="display:none;">
+            <thead>
+                <tr>
+                    <th>District</th>
+                    <th>Crop</th>
+                    <th>Ideal Moisture Range</th>
+                    <th>Irrigation Frequency</th>
+                    <th>Recommended Irrigation</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <div class="back-button">
+            <a href="{{ url_for('nav') }}">
+                <button>Back to Navigation</button>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#state").change(function(){
+                var state = $(this).val();
+                if (state) {
+                    $.ajax({
+                        url: "/get-irrigation-data",
+                        type: "POST",
+                        data: { state: state },
+                        success: function(response) {
+                            var tableBody = $("#irrigation-table tbody");
+                            tableBody.empty();
+
+                            if (response.length > 0) {
+                                response.forEach(function(row) {
+                                    tableBody.append(`
+                                        <tr>
+                                            <td>${row.district}</td>
+                                            <td>${row.crop}</td>
+                                            <td>${row.ideal_moisture_range}</td>
+                                            <td>${row.irrigation_frequency}</td>
+                                            <td>${row.recommended_irrigation}</td>
+                                        </tr>
+                                    `);
+                                });
+                                $("#irrigation-table").show();
+                            } else {
+                                $("#irrigation-table").hide();
+                            }
+                        }
+                    });
+                } else {
+                    $("#irrigation-table").hide();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

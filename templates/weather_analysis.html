@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Data Analysis</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #c1eaff, #b8ffc4);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2e7d32;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        table th, table td {
+            padding: 12px 10px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+
+        table th {
+            background-color: #e0f7fa;
+            color: #00695c;
+        }
+
+        .recommendation {
+            background-color: #e8f5e9;
+            padding: 20px;
+            border-left: 5px solid #2e7d32;
+            border-radius: 10px;
+            font-size: 18px;
+            color: #2e7d32;
+        }
+
+        .btn-back {
+            display: block;
+            margin: 20px auto 0;
+            padding: 10px 20px;
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-back:hover {
+            background-color: #1b5e20;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Monthly Weather Data Analysis</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Temperature (°C)</th>
+                    <th>Humidity (%)</th>
+                    <th>Rainfall (mm)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in weather_data %}
+                <tr>
+                    <td>{{ row.date }}</td>
+<td>{{ row.temperature }}</td>
+<td>{{ row.humidity }}</td>
+<td>{{ row.rainfall }}</td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+            
+            
+            
+        </table>
+
+        {% if recommended_crop %}
+        <div class="recommendation">
+            <strong>Based on average weather conditions, recommended crops for this month:</strong><br>
+            {{ recommended_crop }}
+        </div>
+        {% endif %}
+
+        <a class="btn-back" href="{{ url_for('nav') }}">Back to Navigation</a>
+    </div>
+</body>
+</html>
