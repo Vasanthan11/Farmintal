@@ -14,27 +14,18 @@ from flask_mysqldb import MySQL
 
 
 nav_items = [
-    {'name': 'Home', 'url': '/'},
-    {'name': 'Crop Yield Prediction', 'url': '/crop-yield'},
-    {'name': 'Weather Data Analysis', 'url': '/weather-analysis'},
-    {'name': 'Soil Quality Checker', 'url': '/soil-analysis'},
-    {'name': 'Pest Detection System', 'url': '/pest-detection'},
-    {'name': 'Irrigation Controller', 'url': '/irrigation'},
-    {'name': 'Crop Disease Recognition', 'url': '/crop-disease'},
-    {'name': 'Farm Management Dashboard', 'url': '/dashboard'},
-    {'name': 'Plant Growth Tracker', 'url': '/plant-growth'},
-    {'name': 'Crop Rotation Planner', 'url': '/crop-rotation'},
-    {'name': 'Livestock Health Monitor', 'url': '/livestock-health'},
-    {'name': 'Farm Market Price Tracker', 'url': '/market-prices'},
-    {'name': 'Farm Inventory Tracker', 'url': '/inventory'},
-    {'name': 'Automated Greenhouse Control', 'url': '/greenhouse-control'},
-    {'name': 'Pest Repellent System', 'url': '/pest-repellent'},
-    {'name': 'Fertilizer Dispenser', 'url': '/fertilizer-dispenser'},
-    {'name': 'Farm Energy Efficiency', 'url': '/energy-efficiency'},
-    {'name': 'Crop Storage Management', 'url': '/crop-storage'},
-    {'name': 'Agriculture E-commerce', 'url': '/ecommerce'},
-    {'name': 'Smart Livestock Tracking', 'url': '/livestock-tracking'},
-    {'name': 'Farm Sustainability Metrics', 'url': '/farm-sustainability'} 
+    {'name': 'Home', 'url': '/', 'icon': 'fas fa-home'},
+    {'name': 'Crop Yield Prediction', 'url': '/crop-yield', 'icon': 'fas fa-seedling'},
+    {'name': 'Weather Data Analysis', 'url': '/weather-analysis', 'icon': 'fas fa-cloud-sun'},
+    {'name': 'Soil Quality Checker', 'url': '/soil-analysis', 'icon': 'fas fa-mountain'},
+    {'name': 'Pest Detection System', 'url': '/pest-detection', 'icon': 'fas fa-bug'},
+    {'name': 'Irrigation Controller', 'url': '/irrigation', 'icon': 'fas fa-water'},
+    {'name': 'Crop Disease Recognition', 'url': '/crop-disease', 'icon': 'fas fa-virus'},
+    {'name': 'Crop Rotation Planner', 'url': '/crop-rotation', 'icon': 'fas fa-sync-alt'},
+    {'name': 'Farm Market Price Tracker', 'url': '/market-prices', 'icon': 'fas fa-chart-line'},
+    {'name': 'Farm Inventory Tracker', 'url': '/inventory', 'icon': 'fas fa-warehouse'},
+    {'name': 'Automated Greenhouse Control', 'url': '/greenhouse-control', 'icon': 'fas fa-leaf'},
+    {'name': 'Crop Storage Management', 'url': '/crop-storage', 'icon': 'fas fa-box'}
 ]
 app = Flask(__name__)
 app.secret_key = "your_secret_key" 
@@ -265,9 +256,14 @@ app.register_blueprint(irrigation_bp)
 
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
 
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+
+
+
+# if __name__ == "__main__":
+#     app.run(host="0.0.0.0", port=5000)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

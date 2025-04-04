@@ -626,3 +626,131 @@ INSERT INTO irrigation_data (state, district, crop, ideal_moisture_range, irriga
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE market (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    crop_name VARCHAR(255) NOT NULL,
+    state VARCHAR(255) NOT NULL,
+    district VARCHAR(255) NOT NULL,
+    market_name VARCHAR(255) NOT NULL,
+    price_per_quintal DECIMAL(10,2) NOT NULL,
+    available_quantity INT NOT NULL,
+    demand INT NOT NULL,
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+
+INSERT INTO market (crop_name, state, district, market_name, price_per_quintal, available_quantity, demand)
+VALUES 
+('Wheat', 'Punjab', 'Ludhiana', 'Ludhiana Mandi', 2200.50, 5000, 4500),
+('Rice', 'West Bengal', 'Kolkata', 'Kolkata Wholesale', 1850.75, 6000, 7000),
+('Maize', 'Maharashtra', 'Nagpur', 'Nagpur Krishi Mandi', 1700.00, 4000, 3500),
+('Sugarcane', 'Uttar Pradesh', 'Meerut', 'Meerut Market Yard', 3200.25, 8000, 7800),
+('Soybean', 'Madhya Pradesh', 'Indore', 'Indore Grain Market', 4000.75, 3000, 3200),
+('Cotton', 'Gujarat', 'Surat', 'Surat Cotton Market', 5500.90, 2000, 1800),
+('Mustard', 'Rajasthan', 'Jaipur', 'Jaipur Mandi', 4800.60, 3500, 3400),
+('Barley', 'Haryana', 'Karnal', 'Karnal Grain Market', 2100.40, 2500, 2300),
+('Groundnut', 'Tamil Nadu', 'Chennai', 'Chennai Agri Market', 4900.10, 2700, 2600),
+('Tea', 'Assam', 'Guwahati', 'Guwahati Tea Market', 7000.80, 1500, 1400);
+
+
+
+
+
+
+
+CREATE TABLE farm_management (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    farm_name VARCHAR(255) NOT NULL,
+    owner VARCHAR(255) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    total_area FLOAT NOT NULL,
+    cultivated_area FLOAT NOT NULL,
+    water_source VARCHAR(255) NOT NULL,
+    soil_type VARCHAR(255) NOT NULL
+);
+
+
+
+INSERT INTO farm_management (farm_name, owner, location, total_area, cultivated_area, water_source, soil_type)
+VALUES 
+('Krishna Agro Farm', 'Rajesh Sharma', 'Uttar Pradesh', 200, 180, 'Irrigation', 'Alluvial'),
+('Kaveri Organic Farms', 'Suresh Reddy', 'Tamil Nadu', 150, 130, 'Rain-fed', 'Red'),
+('Sahyadri Farms', 'Vikas Patil', 'Maharashtra', 250, 220, 'Drip Irrigation', 'Black'),
+('Ganga Kisan Farms', 'Anil Kumar', 'Bihar', 180, 150, 'Canal', 'Alluvial'),
+('Narmada Agro Estate', 'Harish Mehta', 'Gujarat', 170, 140, 'Tube Well', 'Loamy'),
+('Cauvery Green Lands', 'Manoj Gowda', 'Karnataka', 300, 270, 'Rain-fed', 'Red'),
+('Indira Farms', 'Preeti Deshmukh', 'Madhya Pradesh', 220, 200, 'Well', 'Clayey'),
+('Himalayan Orchards', 'Suraj Thapa', 'Uttarakhand', 90, 80, 'Spring Water', 'Mountainous'),
+('Godavari Agro', 'Ramana Rao', 'Andhra Pradesh', 240, 210, 'Canal', 'Alluvial'),
+('Sundarban Agro', 'Amit Bhattacharya', 'West Bengal', 130, 110, 'River Water', 'Alluvial'),
+('Punjab Wheat Fields', 'Gurpreet Singh', 'Punjab', 400, 380, 'Canal', 'Loamy'),
+('Rajasthan Desert Farms', 'Sanjay Rathore', 'Rajasthan', 120, 100, 'Borewell', 'Arid'),
+('Brahmaputra Green Lands', 'Dibyajyoti Das', 'Assam', 140, 120, 'Rain-fed', 'Alluvial'),
+('Konkan Banana Plantation', 'Deepak Naik', 'Goa', 80, 70, 'Drip Irrigation', 'Laterite'),
+('Vidarbha Cotton Estate', 'Santosh Jadhav', 'Maharashtra', 200, 170, 'Tube Well', 'Black'),
+('Jharkhand Agro Park', 'Alok Verma', 'Jharkhand', 110, 90, 'Pond Irrigation', 'Red'),
+('Chhattisgarh Paddy Fields', 'Sunil Tiwari', 'Chhattisgarh', 160, 140, 'Canal', 'Lateritic'),
+('Meghalaya Organic Farms', 'Henry Nongrum', 'Meghalaya', 100, 90, 'Rain-fed', 'Mountainous'),
+('Odisha Green Fields', 'Prafulla Das', 'Odisha', 190, 160, 'Canal', 'Alluvial'),
+('Jammu Valley Farms', 'Rajinder Sharma', 'Jammu & Kashmir', 150, 130, 'Spring Water', 'Mountainous'),
+('Kashmir Apple Orchards', 'Fayaz Ahmed', 'Jammu & Kashmir', 120, 110, 'Glacier Water', 'Sandy Loam'),
+('Haryana Wheat Lands', 'Ravinder Malik', 'Haryana', 210, 190, 'Canal', 'Loamy'),
+('Manipur Highland Farms', 'Kamei Rungmei', 'Manipur', 80, 70, 'Rain-fed', 'Red'),
+('Mizoram Spice Farms', 'Lalrin Chhana', 'Mizoram', 90, 85, 'Spring Water', 'Mountainous'),
+('Nagaland Forest Plantations', 'Zeliang Toshi', 'Nagaland', 75, 65, 'Rain-fed', 'Red'),
+('Tripura Tea Estates', 'Dilip Deb', 'Tripura', 100, 95, 'Rain-fed', 'Lateritic'),
+('Arunachal Orange Farms', 'Khim Thapa', 'Arunachal Pradesh', 85, 75, 'Rain-fed', 'Mountainous'),
+('Sikkim Organic Farm', 'Karma Bhutia', 'Sikkim', 70, 60, 'Spring Water', 'Organic Loamy'),
+('Lakshadweep Coconut Grove', 'Ali Mohammed', 'Lakshadweep', 50, 45, 'Rain-fed', 'Coastal Sandy'),
+('Andaman Spice Estate', 'Ramesh Pillai', 'Andaman & Nicobar', 95, 85, 'Rain-fed', 'Coastal Loamy');
